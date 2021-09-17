@@ -1,0 +1,82 @@
+Day 2 Agenda - Total Duration ( Part 1 - 1:24:54 & Part 2 - 1:24:12)
+ 
+•	Practical of Blockchain with Anders.com 
+•	 Knowing technical terms in Blockchain
+•	Types of Blockchain 
+•	Bitcoin Mining
+andersbrownworth.com:-
+It is the platform where we can perform a practical demo of Blockchain Technology
+SHA 256 - HASH:-
+SHA-256 is a cryptographic hash function that takes an input of the random size and produces an output of a fixed size. Hash functions are powerful because they are ‘one-way’. What this is means is, it is possible for anyone to use a hash function to produce an output when given an input; however, it is impossible to use the output of the hash function to reconstruct its given input. This powerful feature of the SHA-256 hash function makes it ideal for application within the Bitcoin network.
+Block in andersbrownworth.com:-
+•	Block Number - 2
+ 
+•	Trans Record - Any Important Data you want to store
+ 
+•	Previous Block Key 0000acbdefxzancba
+ 
+•	Mining Key
+Why 0's are required in the HASH?
+•	Its like game theory
+These 'N' Number of zeros are required for Mining 
+•	Mining is only a part of PUBLIC Blockchain
+•	So only for Public Blockchain, we need that concept of 'N' 0's in the beginning.
+Types of Blockchain?
+•	Public Blockchain - Ethereum, Bitcoin  - Mining
+A public blockchain is not governed by any industry or anyone it is been stored and maintained by Individuals 
+   -->  It has Mining involved in it 
+   --> eg., Ethereum, and BitCoin
+ 
+•	Private Blockchain - R3 Cord   
+This is a Blockchain type which been governed by a Private Company
+ 
+•	Consortium Blockchain - Multi Chain, Hyperledger 
+               It is governed by a Group of Private Stakeholders/ Orgs. 
+
+                It is a kind of Shared resources which is hosted by all the stakeholders, and they all                         store the data in it
+               
+              Hyperledger and Multichain
+Advantages of Blockchain Technology:-
+•	It is a Decentralized System. Yes, most of the cases blockchain is a decentral system that means no central authority can take control of the ...
+•	The Blockchain is Transparent.
+•	 The Blockchain is More Secure.
+•	Faster and Cost-Effective.
+•	 It is Immutable.
+Disadvantages of Blockchain Technology:-
+•	Blockchain is not a distributed computing system. Blockchain is a network that relies on nodes to function properly.
+•	Scalability Is An Issue. Blockchains are not scalable as their counterpart centralized system. If you have used the...
+•	Some Blockchain Solutions Consume Too Much Energy. Blockchain technology got introduced with Bitcoin. It uses the...
+•	Blockchain Cannot Go Back — Data is Immutable. Data immutability has always been one of the biggest...
+Bitcoin:-
+Bitcoin is a cryptocurrency. It is a decentralized digital currency without a central bank or single administrator that can be sent from user to user on the peer-to-peer bitcoin network without the need for intermediaries.
+What makes Bitcoin so much Loveable?
+•	Works on Decentralized network
+•	Can send currency peer to peer 
+•	No fiat currency needed 
+•	No single point of failure
+•	More secure 
+•	Less Prone to frauds & Tampering
+Steps that are involved in mining?
+1.	Trans of BitCoin is happening in real-time between two peers
+2.	These Trxsn are grouped and sent in a Block 
+3.	These Blocks are then sent to all the miners for finding a perfect nonce, which gets the required number of 0 in the beginning 
+4.	The person finding the perfect nonce first will get rewarded with X number of New Virgin BitCoins 
+5.	Those Virgin BitCoins are then out in the market for rotation 
+6.	This cycle continues and then we have our bitcoins running and new BitCoins are generated like this. 
+A limited supply of bitcoins to increase demand:-
+•	The total number of bitcoins which will ever be available is 21 million bitcoins, last bitcoin will be mined sometime in the year 2140.
+•	But now we have 17 Million already mined to date
+
+How this is possible? 
+•	The “ Halving ” effect
+•	50 BitCoins - 3rd Jan 2009 - 3rd Jan 2012
+•	25 Btc - 4th Jan 2012 - 3rd Jan 2016
+•	12.5 Btc - 4th Jan 2016 - 3rd Jan 2020 
+•	6.25 BTC - 4th Jan 2020 - 3rd Jan 2024
+•	3.125 BTC - 4th Jan 2024 - 3rd Jan 2028
+which means For every interval of time the Bitcoin value gets halved.
+Smart Contract?
+•	A certain piece of code(contract) which is stored inside the Blockchain network, when certain conditions are met they are executed on their own
+By,
+@Mariastephan J  
+
