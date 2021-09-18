@@ -1,0 +1,30 @@
+pragma solidity >=0.5.13 < 0.7.3;
+
+contract dataTypes
+{
+    uint8 public myUint8; 
+    uint256 public myUint256; 
+    constructor() public
+    {
+        myUint256 = 0;
+        myUint8 = 255;
+
+    }
+    function setMyInt256( uint256 _myUint256) public 
+    {
+        myUint256 = _myUint256;
+
+    }
+    function incMyInt8() public
+    {
+        myUint8 += 1;
+
+    }
+    function decMyInt8() public
+    {
+        myUint8 -= 1;
+
+    }
+
+}
+
