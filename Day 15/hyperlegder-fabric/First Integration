@@ -1,0 +1,221 @@
+#Integration of Explorer with Fabric and Checking BYFN for Visualization#
+Adding New Organization to Hyperledger Fabric Channel
+Since we need add the new organization, Org3, to BYFN, we will first bring up the BYFN network. Follow these steps:
+1. Bring up the first network using the following command:
+
+$ cd ~
+
+cd fabric-samples/first-network
+
+ sudo ./byfn.sh generate
+
+sudo ./byfn.sh up
+
+ 
+
+2. Execute the script to add Org3 into the mychannel channel:
+
+$ cd ~
+
+cd fabric-samples/first-network
+
+ sudo ./eyfn.sh up
+
+The following screenshot confirms org3 is added to mychannel successfully:
+hyperledger fabric development
+
+ 
+
+We can test this by running a query against Org3 peer0.
+3. To shut down and clean up the network, execute the following:
+cd fabric-samples/first-network
+
+sudo ./eyfn.sh down
+
+ sudo ./byfn.sh down
+
+Like what we did in the Building the Fabric network recipe, the eyfn.sh script is a good resource to understand how things work.
+We will also look into the command-line steps to see the internal building blocks to add an organization to a channel:
+hyperledger fabric development
+
+ 
+
+4. Generate the org3 certificates:
+
+cryptogen generate --config=./org3-crypto.yaml
+
+5. Generate the org3 configuration materials:
+
+configtxgen -printOrg Org3MSP
+ 
+
+6. Generate and submit the transaction configuration for organization 3:
+
+peer channel fetch config config_block.pb -o orderer.example.com:7050 -c mychannel --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/ crypto/ordererOrganizations/example.com/orderers/ orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem $ configtxlator proto_encode --input config.json 
+
+--type common.Config
+
+$ configtxlator proto_encode --input modified_config.json --type common.Config
+
+$ configtxlator compute_update --channel_id mychannel
+
+--original original_config.pb --updated modified_config.pb $ configtxlator proto_decode --input config_update.pb --type common.ConfigUpdate
+
+7. Configure the transaction to add org3, which has been created:
+
+peer channel signconfigtx -f org3_update_in_envelope.pb 
+
+8. Submit the transaction from a different peer (peer0.org2), who also signs it:
+
+peer channel update -f org3_update_in_envelope.pb -c mychannel -o orderer.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/ crypto/ordererOrganizations/example.com/orderers/ orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+ 
+
+9. Get the org3 peer to join the network:
+
+peer channel fetch 0 mychannel.block -o orderer.example.com:7050 -c mychannel --tls --cafile /opt/gopath/src/github.com/
+
+ 
+hyperledger/fabric/peer/crypto/ordererOrganizations/
+
+example.com/orderers/orderer.example.com/ msp/tlscacerts/tlsca.example.com-cert.pem
+peer channel join 
+
+-b mychannel.blockcd fabric-samples/first-network
+10. Install and update the chaincode:
+
+peer chaincode install -n mycc -v 2.0 -l golang -p github.com/chaincode/chaincode_example02/go/
+
+$ peer chaincode upgrade -o orderer.example.com:7050
+
+--tls true --cafile /opt/gopath/src/github.com/hyperledger/
+
+fabric/peer/crypto/ordererOrganizations/example.com/orderers/
+
+orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+
+-C mychannel -n mycc -v 2.0 -c
+
+'{"Args":["init","a","90","b","210"]}'
+
+-P 'AND ('\''Org1MSP.peer'\'','\''Org2MSP.peer'\'', '\''Org3MSP.peer'\'')'11. Query peer0 org3:
+
+peer chaincode query -C mychannel -n mycc -c '{"Args":["query","a"]}'
+
+ 
+
+12. Invoke the transaction to move 10 from a to b again on a different peer:
+
+peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/ crypto/ordererOrganizations/example.com/orderers/ orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/
+
+fabric/peer/crypto/peerOrganizations/org1.example.com/peers/
+
+peer0.org1.example.com/tls/ca.crt
+
+--peerAddresses peer0.org2.example.com:7051
+
+--tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/ fabric/peer/crypto/peerOrganizations/org2.example.com/peers/
+
+peer0.org2.example.com/tls/ca.crt
+
+--peerAddresses peer0.org3.example.com:7051
+--tlsRootCertFiles/opt/gopath/src/github.com/hyperledger/ fabric/peer/crypto/peerOrganizations/org3.example.com/peers/ peer0.org3.example.com/tls/ca.crt
+-c '{"Args":["invoke","a","b","10"]}'
+
+This concludes how to add an organization to an existing network in a channel. We will look at how to use CouchDB to review transactions in the next recipe.
+
+Following all the previous steps will create our first network, which consists of two organizations, two peers per organization, and single Solo ordering service. In this recipe, we showed you how to add a third organization to an application channel with its own peers to an already running first network, and then join it to the new channel.
+When you view the log file, you will be able to see details in the following order:
+
+Generating Org3 config material
+Generating and submitting config tx to add Org3
+Creating config transaction to add Org3 to the network
+Installing jq
+Config transaction to add Org3 to the network
+Signing the config transaction
+Submitting the transaction from a different peer (peer0.org2), which also signs it
+Configure transaction to add Org3 to network submitted
+ Having Org3 peers join the network
+Getting Org3 on to your first network
+Fetching the channel config block from orderer
+peer0.org3 joined the mychannel channel
+peer1.org3 joined the mychannel channel
+Installing chaincode 2.0 on peer0.org3
+Upgrading chaincode to have Org3 peers on the network
+Finishing adding Org3 to your first network
+Chaincode is installed on peer0.org1
+Chaincode is installed on peer0.org2
+Chaincode is upgraded on peer0.org1 on the mychannel channel
+Finished adding Org3 to your first network!
+Updating modification policies or altering batch sizes or any other channel configuration can be updated using the same approach but for this recipe we will focus solely on the integration of a new organization.
+
+Additional Notes
+The following block shows the org3-crypto.yaml section for Org3:
+
+# ------------------------------------------------------------------------- -
+
+"PeerOrgs" - Definition of organizations managing peer nodes
+
+------------------------------------------------------------------------
+
+--
+
+PeerOrgs:
+
+-------------------------------------------------------------------------
+
+--
+
+Org3
+
+# -------------------------------------------------------------------------
+
+--
+
+- Name: Org3
+
+Domain: org3.example.com
+
+EnableNodeOUs: true
+
+Template:
+
+Count: 2
+
+Users:
+
+Count: 1
+
+The following block shows the configtx.yaml section for Org3:
+########################################################################### ######
+
+#Section: Organizations
+
+ #- This section defines the different organizational identities which will be referenced later in the configuration.
+
+ 
+
+#
+
+###########################################################################
+
+#####
+
+Organizations:
+
+- &Org3
+
+# DefaultOrg defines the organization which is used in the sampleconfig
+
+# of the fabric.git development environment
+
+Name: Org3MSP
+
+# ID to load the MSP definition as ID: Org3MSP
+
+MSPDir: crypto-config/peerOrganizations/org3.example.com/msp AnchorPeers:
+
+# AnchorPeers defines the location of peers which can be used for cross org gossip #communication. Note, this value is only
+
+# encoded in the genesis block in the Application section context
+
+Host: peer0.org3.example.com Port: 7051
